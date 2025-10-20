@@ -1,6 +1,8 @@
 // This script is the part of Don't Track Me Google (DTMG) that does not
 // directly interact with the page's context. It may run in an ISOLATED world.
 
+const { url } = require("browserify/lib/builtins");
+
 // Keep the following functions in sync with main_world_script.js:
 // - getReferrerPolicy
 // - getRealLinkFromGoogleUrl
@@ -113,6 +115,15 @@ function handlePointerPress(e) {
         }
     }
     updateReferrerPolicy(a);
+    if (a.hostname == 'translate.google.com'){
+        
+        console.log('Teste');
+    }
+
+    if (a.hostname == 'translate.google.com' && a.pathname == '/translate'){
+        url = /[?&](?:u)=((?:https?|ftp)[%:][^&]+)/.exec(a.search);
+        console.log(url);
+    }
 
     if (e.eventPhase === Event.CAPTURING_PHASE) {
         // Our event listener runs first, to sanitize the link.
